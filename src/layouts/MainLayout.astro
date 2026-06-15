@@ -1,0 +1,125 @@
+---
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Spotlight from "@/components/Spotlight.astro";
+import type { Lang } from "@/i18n/translations";
+import { t } from "@/i18n/translations";
+
+import '@styles/global.css';
+
+interface Props {
+	lang?: Lang;
+	title?: string;
+	description?: string;
+	keywords?: string;
+	googleAnalyticsId?: string;
+}
+
+const { lang = 'en', googleAnalyticsId } = Astro.props;
+const tr = t(lang);
+
+const title       = Astro.props.title       ?? tr.layout.title;
+const description = Astro.props.description ?? tr.layout.description;
+const keywords    = Astro.props.keywords    ?? tr.layout.keywords;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL("/img/logos/profile.jpg", Astro.url);
+---
+
+<html lang={tr.layout.htmlLang} dir={tr.dir} class="scroll-smooth scroll-pt-20">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		
+		<!-- SEO -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="keywords" content={keywords} />
+		<meta name="author" content="Abdulkarim Aljundubi" />
+		<link rel="canonical" href={canonicalURL} />
+		<!-- hreflang alternates -->
+		<link rel="alternate" hreflang="en" href={new URL('/', Astro.site)} />
+		<link rel="alternate" hreflang="ar" href={new URL('/ar/', Astro.site)} />
+		<link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site)} />
+		
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={socialImageURL} />
+		<meta property="og:locale" content={tr.layout.ogLocale} />
+		<meta property="og:site_name" content="Abdulkarim Aljundubi Portfolio" />
+		
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={canonicalURL} />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImageURL} />
+		
+		<!-- Robots y otros -->
+		<meta name="robots" content="index, follow" />
+		<meta name="theme-color" content="#1ad1ff" />
+		
+		<!-- Google Analytics -->
+		{googleAnalyticsId && import.meta.env.PROD && (
+			<>
+				<script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>
+				<script is:inline define:vars={{ googleAnalyticsId }}>
+					window.dataLayer = window.dataLayer || [];
+					function gtag() {
+						dataLayer.push(arguments);
+					}
+					gtag('js', new Date());
+					gtag('config', googleAnalyticsId);
+				</script>
+			</>
+		)}
+		
+		<!-- Schema.org JSON-LD -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Person",
+			"name": "Abdulkarim Aljundubi",
+			"jobTitle": "IT Student",
+			"image": socialImageURL.toString(),
+			"sameAs": [
+				"https://www.linkedin.com/in/abdulkarim-aljundubi-8299ba399/",
+				"https://github.com/Abdulkarim-Mohammed"
+			],
+			"alumniOf": {
+				"@type": "EducationalOrganization",
+				"name": "Islamic University of Madinah"
+			},
+			"knowsAbout": [
+				"HTML","CSS","JavaScript","React","Python","Java","SQL","Web Development"
+			],
+			"description": description
+		})} />
+	</head>
+	<script>
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					const el = entry.target as HTMLElement;
+					const delay = el.dataset.delay ? parseInt(el.dataset.delay) : 0;
+					setTimeout(() => el.classList.add('visible'), delay);
+					observer.unobserve(el);
+				}
+			});
+		}, { threshold: 0.12 });
+
+		document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
+	</script>
+	<body class="bg-dark text-light font-primary">
+		<Header lang={lang} />
+		<main class="relative">
+			<Spotlight />
+			<slot />
+		</main>
+		<Footer lang={lang} />
+	</body>
+</html>

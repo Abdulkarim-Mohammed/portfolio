@@ -1,0 +1,30 @@
+---
+
+---
+
+<div class="spotlight" id="spotlight"></div>
+
+<script>
+	const spotlight = document.getElementById("spotlight");
+
+	document.addEventListener("mousemove", (e) => {
+		spotlight?.style.setProperty("--x", e.clientX.toString());
+		spotlight?.style.setProperty("--y", e.clientY.toString());
+	});
+
+	document.addEventListener("mouseenter", () => {
+		spotlight?.classList.add("visible");
+	});
+
+	document.addEventListener("mouseleave", () => {
+		spotlight?.classList.remove("visible");
+	});
+
+	document.querySelector("main")?.addEventListener("mouseenter", () => {
+		spotlight?.classList.add("visible");
+	});
+
+	document.querySelector("main")?.addEventListener("mouseleave", () => {
+		spotlight?.classList.remove("visible");
+	});
+</script>

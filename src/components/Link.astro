@@ -1,0 +1,8 @@
+---
+const { link, target, rel } = Astro.props;
+---
+
+<a href={link} target={target} rel={rel} class="relative font-medium group">
+	<span class="relative z-10 group-hover:text-[var(--color-dark)] transition-all duration-300"><slot /></span>
+	<span class="absolute bottom-0 left-0 w-full h-0.5 bg-[var(--color-primary)] -z-10 group-hover:h-4.5 transition-all duration-300"></span>
+</a>

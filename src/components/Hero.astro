@@ -1,0 +1,86 @@
+---
+import ButtonIcon from "@/components/ButtonIcon.astro";
+import Badge from "@/components/Badge.astro";
+import { Icon } from "astro-icon/components";
+import type { Lang } from "@/i18n/translations";
+import { t } from "@/i18n/translations";
+
+interface Props {
+	lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+const tr = t(lang);
+---
+
+<section class="relative flex flex-row full-width h-screen bg-gradient-to-t to-[#282828] from-[#191925] text-light" id="home" style="height: 100svh">
+	<div class="relative flex flex-col md:flex-row items-center justify-center mx-auto h-full px-8 gap-12 max-w-[1200px] z-10 w-full">
+		<div class="hero-item flex flex-col items-center gap-3 shrink-0" style="animation-delay: 1.5s">
+			<div class="relative rounded-full w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72">
+				<img src="/img/logos/profile.jpg" alt="Abdulkarim Aljundubi - IT Student" class="rounded-full w-full h-full object-cover ring-4 ring-[var(--color-primary)]" />
+				<div class="shimmer-overlay rounded-full"></div>
+			</div>
+			<Badge class="text-base px-5 py-2">{tr.hero.role}</Badge>
+		</div>
+		<div class="flex flex-col gap-y-4 text-center md:text-left">
+			<p class="hero-item font-light text-sm sm:text-base" style="animation-delay: 2.5s">{tr.hero.greeting}</p>
+			<h1 class="hero-item text-4xl sm:text-5xl md:text-6xl" style="animation-delay: 3.5s">{tr.hero.name}</h1>
+			<p class="hero-item font-light text-base text-slate-300 lg:text-lg leading-7.5 max-w-lg" style="animation-delay: 4.5s">
+				<span class="text-accent font-[400] whitespace-nowrap">{tr.hero.years}</span>{tr.hero.description}
+			</p>
+			<div class="hero-item flex gap-x-2.5 justify-center md:justify-start" style="animation-delay: 5.5s">
+				<ButtonIcon name="LinkedIn" url="https://www.linkedin.com/in/abdulkarim-aljundubi-8299ba399/" iconName="linkedin" isBlank animated />
+				<ButtonIcon name="Github" url="https://github.com/Abdulkarim-Mohammed" iconName="github" isBlank animated />
+				<ButtonIcon name={tr.hero.cta} url="mailto:Abdulkarim.aljundubi@gmail.com" iconName="envelope" isBlank animated />
+			</div>
+		</div>
+	</div>
+	<a class="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20" href="#about" aria-label={tr.hero.ariaDown}>
+		<Icon
+			name="arrow-down"
+			class="text-5xl mt-4 text-gray-600 cursor-pointer animate-bounce duration-500 hover:text-gray-200"
+			aria-label={tr.hero.ariaDown}
+		/>
+	</a>
+</section>
+
+<style>
+	.shimmer-overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			120deg,
+			transparent 20%,
+			rgba(255, 255, 255, 0.25) 50%,
+			transparent 80%
+		);
+		background-size: 200% 100%;
+		animation: shimmer 5s ease-in-out infinite;
+		pointer-events: none;
+	}
+
+	@keyframes shimmer {
+		0%   { background-position: 200% center; }
+		100% { background-position: -200% center; }
+	}
+
+	.hero-item {
+		opacity: 0;
+		transform: translateY(40px);
+		animation: fadeUp 0.8s ease forwards;
+	}
+
+	@keyframes fadeUp {
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+</style>
+
+<script>
+	document.body.style.overflow = 'hidden';
+	setTimeout(() => {
+		document.body.style.overflow = '';
+	}, 6500);
+</script>

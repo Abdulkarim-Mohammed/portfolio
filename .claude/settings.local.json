@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Select-String \"xampp|oracle|vercel|github|vscode\")",
+      "Bash(node -e \"const icons = require\\('C:/Users/keemo/Downloads/portfolio/node_modules/@iconify-json/devicon/index.js'\\); const names = Object.keys\\(icons.icons.icons\\); console.log\\(names.filter\\(n => ['xampp','oracle','vercel','github','vscode','java','python','react','javascript','css3','html5','git'].some\\(k => n.includes\\(k\\)\\)\\).join\\('\\\\n'\\)\\)\")",
+      "Bash(node -e \"const icons = require\\('C:/Users/keemo/Downloads/portfolio/node_modules/@iconify-json/devicon/index.js'\\); const names = Object.keys\\(icons.icons.icons\\); console.log\\(names.filter\\(n => n.includes\\('xampp'\\) || n.includes\\('oracle'\\)\\).join\\('\\\\n'\\) || 'not found'\\)\")",
+      "PowerShell(git -C \"C:\\\\Users\\\\keemo\\\\Desktop\\\\portfolio\" status 2>&1)"
+    ]
+  }
+}
