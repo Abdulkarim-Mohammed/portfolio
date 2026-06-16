@@ -112,7 +112,7 @@ const technologies = [
 	<div data-reveal data-delay="100">
 		<Card isDark>
 			<h3 class="text-2xl font-semibold mb-8 text-center lg:text-start">{tr.about.techTitle}</h3>
-			<div class="flex flex-wrap gap-x-2 gap-y-4 justify-center lg:justify-start rtl:lg:justify-end">
+			<div dir={tr.dir} class="flex flex-wrap gap-x-2 gap-y-4 justify-center lg:justify-start">
 				{technologies.map((tech) => (
 					<div class="flex items-center gap-2 px-4 py-2 border border-slate-700 rounded-xl bg-[#141820] hover:bg-[#28323f] transition-all ease cursor-default">
 						{tech.icon && <Icon name={tech.icon} class={`w-5 h-5 ${tech.invert ? 'brightness-0 invert' : ''}`} />}
