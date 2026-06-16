@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://your-domain.com', // ← غيّره إلى نطاقك الحقيقي
+  site: 'https://portfolio-abdulkarim.vercel.app',
   vite: {
     plugins: [tailwindcss()]
   },
