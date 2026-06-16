@@ -1,45 +1,86 @@
 # Abdulkarim Aljundubi — Portfolio
 
-A bilingual (English + Arabic with RTL) portfolio built with Astro + Tailwind CSS v4.
-Same design as the reference template, with the green accent replaced by a neon light-blue (#1ad1ff).
+Personal portfolio website built with **Astro 5** and **Tailwind CSS v4**, featuring full bilingual support (English + Arabic with RTL).
 
-## Run locally
+**Live:** [your-domain.com](https://portfolio-abdulkarim.vercel.app)
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | [Astro 5](https://astro.build) |
+| Styling | [Tailwind CSS v4](https://tailwindcss.com) |
+| Icons | [astro-icon](https://github.com/natemoo-re/astro-icon) + Devicons |
+| SEO | [@astrojs/sitemap](https://docs.astro.build/en/guides/integrations-guide/sitemap/) |
+| Language | TypeScript |
+
+---
+
+## Features
+
+- **Bilingual** — English (`/`) and Arabic (`/ar/`) with automatic RTL layout
+- **Sections** — Hero, About, Education, Projects, Contact
+- **Single source of truth** — all text for both languages lives in `src/i18n/translations.ts`
+- **Path aliases** — `@components/*`, `@layouts/*`, `@i18n/*`, etc.
+- **Sitemap** — auto-generated on build
+
+---
+
+## Getting Started
+
 ```bash
 npm install
-npm run dev      # http://localhost:4321  (English)
-                 # http://localhost:4321/ar/  (Arabic)
-npm run build    # production build into ./dist
+npm run dev      # → http://localhost:4321      (English)
+                 # → http://localhost:4321/ar/  (Arabic)
+npm run build    # production build → ./dist
+npm run preview  # preview the production build locally
 ```
 
-## Languages
-- English (default):  /
-- Arabic (RTL):       /ar/
-- The language toggle in the header switches between them (EN ⇄ AR).
+---
 
-## What you still need to add (place files in /public)
-These are referenced by the site but not included yet:
+## Project Structure
 
-1. /public/img/profile.jpg        ← your profile photo (square, ~400x400)
-2. /public/img/medvision.webp      ← screenshot of the MedVision project (16:9)
-3. /public/img/logos/kaggle_logo.png  ← Kaggle logo for the certification card
-4. /public/img/logos/*.svg         ← tech logos used in the "Technologies" section:
-   html_icon.svg, css_icon.svg, js_icon.svg, react_icon.svg, python_icon.svg,
-   java_icon.svg, oracle_icon.svg, git_icon.svg, github_icon.svg, vscode_icon.svg,
-   vercel_icon.svg, xampp_icon.svg
-   (You can grab these from https://devicon.dev or simpleicons.org)
-5. /public/fonts/Sansation-*.woff  ← the Sansation font files (Light, Regular, Bold + italics)
-   or replace the @font-face blocks in src/styles/global.css with another font.
-6. /public/favicon.svg             ← site icon (optional)
-7. /public/files/Abdulkarim_CV.pdf ← your CV (optional; add a download button if wanted)
+```
+src/
+├── components/     # Hero, About, Projects, Contact, Header, Footer …
+├── layouts/        # MainLayout, SectionLayout, BoxLayout
+├── pages/
+│   ├── index.astro   # English route  /
+│   └── ar/
+│       └── index.astro  # Arabic route  /ar/
+├── i18n/
+│   └── translations.ts  # All site text (EN + AR)
+└── styles/
+    └── global.css       # Global styles & CSS variables
+```
 
-## Where your data lives
-All text (both languages) is in ONE file: src/i18n/translations.ts
-Edit that file to change any wording. The Arabic was translated from your English;
-feel free to refine it.
+---
 
-## Color
-The neon blue is defined once as --color-primary in src/styles/global.css.
-Change that single value to adjust the accent across the whole site.
+## Customization
 
-## Config
-- Set your real domain in astro.config.mjs (the `site` field) before deploying.
+### Content
+Edit `src/i18n/translations.ts` to update any text, projects, or education entries for both languages.
+
+### Accent color
+The neon blue (`#1ad1ff`) is defined once in `src/styles/global.css`:
+
+```css
+--color-primary: #1ad1ff;
+```
+
+Change that value and it updates across the entire site.
+
+### Domain
+Set your real domain in `astro.config.mjs` before deploying:
+
+```js
+site: 'https://your-domain.com',
+```
+
+---
+
+## License
+
+MIT
