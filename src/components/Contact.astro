@@ -1,5 +1,4 @@
 ---
-import ButtonIcon from "./ButtonIcon.astro";
 import type { Lang } from "@/i18n/translations";
 import { t } from "@/i18n/translations";
 
@@ -9,10 +8,20 @@ interface Props {
 
 const { lang = "en" } = Astro.props;
 const tr = t(lang);
+
+const EMAILJS_SERVICE_ID  = "service_koko";
+const EMAILJS_TEMPLATE_ID = "template_h62ppbt";
+const EMAILJS_PUBLIC_KEY  = "oEyPKcdsnxPIp7P8b";
+
+const sendBtnText = tr.contact.sendBtn;
+const sendingText = tr.contact.sending;
+const successText = tr.contact.successMsg;
+const errorText   = tr.contact.errorMsg;
 ---
 
 <section class="full-width bg-[#191925] text-light" id="contact">
-  <div class="flex flex-col items-center justify-center text-center gap-6 max-w-[1200px] mx-auto px-4 sm:px-8 lg:px-16 xl:px-32 py-24 sm:py-32">
+  <div class="flex flex-col items-center justify-center text-center gap-8 max-w-[1200px] mx-auto px-4 sm:px-8 lg:px-16 xl:px-32 py-24 sm:py-32">
+
     <h2 data-reveal class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
       {tr.contact.headline}
     </h2>
@@ -21,31 +30,115 @@ const tr = t(lang);
       {tr.contact.subheadline}
     </p>
 
-    <a
-      data-reveal data-delay="250"
-      href="https://mail.google.com/mail/?view=cm&to=Abdulkarim.aljundubi@gmail.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="group text-slate-400 hover:text-accent transition-colors duration-200 text-base underline underline-offset-4 decoration-slate-700 group-hover:decoration-accent"
+    <form
+      data-reveal
+      data-delay="250"
+      id="contact-form"
+      class="w-full max-w-lg flex flex-col gap-4 text-start"
+      dir={tr.dir}
     >
-      Abdulkarim.aljundubi@gmail.com
-    </a>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-1.5">
+          <label for="name" class="text-sm font-medium text-slate-400 uppercase tracking-wider">
+            {tr.contact.nameLabel}
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            placeholder={tr.contact.namePlaceholder}
+            required
+            class="bg-[#171e2d] border border-slate-700 rounded-xl px-4 py-3 text-light placeholder-slate-600 focus:outline-none focus:border-[var(--color-primary)] transition-colors duration-200"
+          />
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="email" class="text-sm font-medium text-slate-400 uppercase tracking-wider">
+            {tr.contact.emailFieldLabel}
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder={tr.contact.emailFieldPlaceholder}
+            required
+            class="bg-[#171e2d] border border-slate-700 rounded-xl px-4 py-3 text-light placeholder-slate-600 focus:outline-none focus:border-[var(--color-primary)] transition-colors duration-200"
+          />
+        </div>
+      </div>
 
-    <div data-reveal data-delay="350" class="flex flex-wrap gap-3 justify-center mt-2">
-      <ButtonIcon
-        isBlank
-        iconName="github"
-        url="https://github.com/Abdulkarim-Mohammed"
-        borderColor="var(--color-primary)"
-        name="GitHub"
-      />
-      <ButtonIcon
-        isBlank
-        iconName="linkedin"
-        url="https://www.linkedin.com/in/abdulkarim-aljundubi-8299ba399/"
-        borderColor="var(--color-primary)"
-        name="LinkedIn"
-      />
-    </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="subject" class="text-sm font-medium text-slate-400 uppercase tracking-wider">
+          {tr.contact.subjectLabel}
+        </label>
+        <input
+          id="subject"
+          name="subject"
+          type="text"
+          placeholder={tr.contact.subjectPlaceholder}
+          required
+          class="bg-[#171e2d] border border-slate-700 rounded-xl px-4 py-3 text-light placeholder-slate-600 focus:outline-none focus:border-[var(--color-primary)] transition-colors duration-200"
+        />
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="message" class="text-sm font-medium text-slate-400 uppercase tracking-wider">
+          {tr.contact.messageLabel}
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows="5"
+          placeholder={tr.contact.messagePlaceholder}
+          required
+          class="bg-[#171e2d] border border-slate-700 rounded-xl px-4 py-3 text-light placeholder-slate-600 focus:outline-none focus:border-[var(--color-primary)] transition-colors duration-200 resize-none"
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        id="submit-btn"
+        class="w-full py-3 px-6 rounded-xl font-semibold bg-[var(--color-primary)] text-[#191925] hover:opacity-90 active:scale-95 transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {tr.contact.sendBtn}
+      </button>
+
+      <p id="form-feedback" class="text-center text-sm hidden"></p>
+    </form>
+
   </div>
 </section>
+
+<script define:vars={{ EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY, sendBtnText, sendingText, successText, errorText }}>
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+  document.head.appendChild(script);
+
+  script.onload = () => {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+    const form     = document.getElementById('contact-form');
+    const btn      = document.getElementById('submit-btn');
+    const feedback = document.getElementById('form-feedback');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      btn.disabled    = true;
+      btn.textContent = sendingText;
+      feedback.className = 'text-center text-sm hidden';
+
+      try {
+        await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form);
+        feedback.textContent = successText;
+        feedback.className   = 'text-center text-sm text-[#1ad1ff]';
+        form.reset();
+      } catch {
+        feedback.textContent = errorText;
+        feedback.className   = 'text-center text-sm text-red-400';
+      } finally {
+        btn.disabled    = false;
+        btn.textContent = sendBtnText;
+      }
+    });
+  };
+</script>
