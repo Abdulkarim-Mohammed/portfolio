@@ -28,7 +28,7 @@ const tr = t(lang);
 			<p class="hero-item font-light text-base text-slate-300 lg:text-lg leading-7.5 max-w-lg" style="animation-delay: 4.5s">
 				<span class="text-accent font-[400] whitespace-nowrap">{tr.hero.years}</span>{tr.hero.description}
 			</p>
-			<div class="hero-item flex gap-x-2.5 justify-center md:justify-start" dir={tr.dir} style="animation-delay: 5.5s">
+			<div class="hero-item flex gap-x-2.5 justify-center md:justify-start" style={`animation-delay: 5.5s${lang === 'ar' ? '; direction: rtl' : ''}`}>
 				<ButtonIcon name="LinkedIn" url="https://www.linkedin.com/in/abdulkarim-aljundubi-8299ba399/" iconName="linkedin" isBlank animated />
 				<ButtonIcon name="Github" url="https://github.com/Abdulkarim-Mohammed" iconName="github" isBlank animated />
 				<ButtonIcon name={tr.hero.cta} url="mailto:Abdulkarim.aljundubi@gmail.com" iconName="envelope" isBlank animated />
