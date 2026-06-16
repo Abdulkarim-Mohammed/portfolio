@@ -16,7 +16,7 @@ export const translations = {
     hero: {
       greeting:    'Hi 👋 my name is',
       name:        'Abdulkarim Aljundubi',
-      role:        'IT Student',
+      role:        'Software Developer',
       years:       'Undergraduate Student',
       description: ' passionate about crafting modern web experiences and building real-world apps.',
       cta:         "Let's talk?",
@@ -122,7 +122,7 @@ export const translations = {
     hero: {
       greeting:    'مرحباً 👋 اسمي',
       name:        'عبدالكريم الجندبي',
-      role:        'طالب تقنية معلومات',
+      role:        'مطور برمجيات',
       years:       'طالب IT',
       description: ' شغوف بصناعة تجارب ويب حديثة وبناء تطبيقات تحل مشكلات واقعية.',
       cta:         'لنتحدث؟',

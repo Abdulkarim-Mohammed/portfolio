@@ -21,7 +21,7 @@ const otherLang   = lang === 'en' ? 'AR' : 'EN';
 const otherLangUrl = lang === 'en' ? '/ar/' : '/';
 ---
 <header class="header-slide fixed top-0 left-0 right-0 z-50 mx-auto w-fit">
-	<BoxLayout isBlur hasBorder={false}>
+	<BoxLayout isBlur hasBorder={false} class="my-1 sm:my-5">
 		<nav class="flex items-center justify-between gap-1.5 sm:gap-3 md:gap-4 text-xs sm:text-sm md:text-base">
 			{ links.map(({href, text}) => <a href={href} class="whitespace-nowrap hover:text-[#1ad1ff] transition-colors">{text}</a>) }
 			<a
