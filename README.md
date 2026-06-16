@@ -2,7 +2,7 @@
 
 Personal portfolio website built with **Astro 5** and **Tailwind CSS v4**, featuring full bilingual support (English + Arabic with RTL).
 
-**Live:** [your-domain.com](https://portfolio-abdulkarim.vercel.app)
+**Live:** [Here](https://portfolio-abdulkarim.vercel.app)
 
 ---
 
